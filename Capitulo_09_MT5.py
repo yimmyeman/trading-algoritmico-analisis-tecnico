@@ -9,9 +9,9 @@ mt5.initialize()
 class MT5:
 
    def get_data(symbol, n, timeframe=mt5.TIMEFRAME_D1):
-        """ Function to import the data of the chosen symbol"""
+        """ Función para importar los datos del símbolo elegido"""
 
-        # Initialize the connection if there is not
+        # Inicializamos la conexión si no estaba activa
         mt5.initialize()
 
         # Current date extract
@@ -34,10 +34,11 @@ class MT5:
         return rates_frame
 
    def orders(symbol, lot, buy=True, id_position=None):
-       """ Send the orders """
+       """ Enviamos las órdenes """
 
-       # Initialize the connection if there is not
-       mt5.initialize()
+        # Inicializamos la conexión si no estaba activa
+       if mt5.initialize() == False:
+           mt5.initialize()
 
        # Get filling mode 
        filling_mode = mt5.symbol_info(symbol).filling_mode - 1
@@ -126,7 +127,7 @@ class MT5:
       mt5.initialize()
 
       # Define the name of the columns that we will create
-      colonnes = ["ticket", "position", "symbol", "volume"]
+      columns = ["ticket", "position", "symbol", "volume"]
 
       # Go take the current open trades
       current = mt5.positions_get()
@@ -141,7 +142,7 @@ class MT5:
                                           element.type,
                                           element.symbol,
                                           element.volume],
-                                         index=colonnes).transpose()
+                                         index=columns).transpose()
            summary = pd.concat((summary, element_pandas), axis=0)
 
       return summary
@@ -149,8 +150,9 @@ class MT5:
 
    def run(symbol, long, short, lot):
 
-        # Initialize the connection if there is not
-        mt5.initialize()
+        # Inicializamos la conexión si no estaba activa
+        if mt5.initialize() == False:
+            mt5.initialize()
 
         # Choose your  symbol
         print("------------------------------------------------------------------")
@@ -206,9 +208,9 @@ class MT5:
         print("------------------------------------------------------------------")
 
    def close_all_night():
-        mt5.initialize()
         result = MT5.resume()
         for i in range(len(result)):
+            before =  mt5.account_info().balance
             row = result.iloc[0+i:1+i,:]
             if row["position"][0]==0:
                 res = MT5.orders(row["symbol"][0], row["volume"][0], buy=True, id_position=row["ticket"][0])
