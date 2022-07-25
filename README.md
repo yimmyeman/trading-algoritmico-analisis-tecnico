@@ -13,7 +13,7 @@
 
 ### VPS / Instalar Windows en tu Mac
 
-VPS: https://billing.virmach.com/aff.php?aff=10381
+VPS: [https://billing.virmach.com/aff.php?aff=10381](https://billing.virmach.com/aff.php?aff=10561)
 
 BOOT CAMP MAC: https://www.youtube.com/watch?v=Hmm9Q-T0oTo
 
